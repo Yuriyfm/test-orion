@@ -3,9 +3,11 @@ from sqlalchemy.orm.exc import UnmappedInstanceError
 from orion import app, db
 from flask import request, jsonify, Response
 from orion.models import Person, Phone, Email
-from orion.data_validation import add_person_data_validation, update_person_data_validation, add_phone_data_validation, \
+from utils.data_validation import add_person_data_validation, update_person_data_validation, add_phone_data_validation, \
     add_email_data_validation, id_validation, sort_data_persons, sort_data_phones, sort_data_emails
 from werkzeug.exceptions import BadRequest
+
+# В данном модуле описаны методы обработки запросов к API по сущностям Person, Phone и Email.
 
 
 @app.errorhandler(404)
@@ -13,7 +15,6 @@ def page_not_found(e):
     return ('Неверный URL адрес')
 
 
-# Ниже описаны методы обработки запросов по сущностям Person, Phone и Email.
 # Методы для сущности Person
 @app.route('/api/get_persons_list', methods=['POST'])
 def get_persons_list():

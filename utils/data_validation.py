@@ -1,5 +1,6 @@
 import re
 
+#модуль валидации данных с помощью regex
 
 def add_person_data_validation(request_data):
     '''Функция, с помощью regexp, проверяет валидность данных отправленных в обработчик add_person'''
@@ -18,9 +19,9 @@ def add_person_data_validation(request_data):
             if not re.match("^((?:19|20)\d\d)-(0[1-9]|1[012])-([12][0-9]|3[01]|0[1-9])$", item['birthday']):
                 return f'Неверный формат атрибута birthday в элементе списка номер {num+1}. Ожидается дата в формате ' \
                        f'YYYY-MM-DD, было получено - {item["birthday"]}.'
-            if not re.match("^([А-Я][а-яА-Я\-]{1,})(?: +[А-Я][а-яА-Я\-]{1,})?, +(?:\d+(?:-[яЯ])? +)?([А-Я][а-яА-Я\-]"
-                            "{1,})(?:( +[а-яА-Я][а-яА-Я\-]{1,})|( +[а-я]))*?( +\d+\-[яЯ])?, +д. +\d+[А-Я]{0,1},"
-                            " +кв. +\d+$", item['address']):
+            if not re.match("^([А-Я][а-яёА-Я\-]{1,})(?: +[А-Я][а-яёА-Я\-]{1,})?, +(?:\d+(?:-[яЯ])? +)?([А-Я][а-яёА-Я\-]"
+                            "{1,})(?:( +[а-яёА-Я][а-яёА-Я\-]{1,})|( +[а-я]))*?( +\d+(\-)?[а-яёА-Я])?,"
+                            " +д. +\d+[А-Я]{0,1}, +кв. +\d+$", item['address']):
                 return f'Неверный формат атрибута address в элементе списка номер {num+1}. Ожидается адрес в  подобном' \
                        f' формате - Красноярск, Мира, д. 1, кв. 3 (элементы - "город", "улица", "дом", "квартира",' \
                        f' разделены запятой и пробелом, количество пробелов между элементами  и внутри них может быть' \
@@ -133,9 +134,9 @@ def id_validation(request_data):
 
 
 def sort_data_persons(request_data):
+    '''Функция проверяет валидность параметров сортировки отправленных в обработчик get_persons_list'''
     try:
-        attributes = ['person_id', 'address', 'birthday', 'email_address', 'email_type', 'file_path', 'full_name', 'gender',
-                      'phone_number', 'phone_type']
+        attributes = ['person_id', 'address', 'birthday', 'file_path', 'full_name', 'gender']
         order = ['desc', 'asc']
         if request_data['sorted_by'] not in attributes:
             return f'Неверный формат значения атрибута sorted_by. Ожидается один из следующих вариантов - {attributes}' \
@@ -150,6 +151,7 @@ def sort_data_persons(request_data):
     return 'Data is valid'
 
 def sort_data_phones(request_data):
+    '''Функция проверяет валидность параметров сортировки отправленных в обработчик get_phones_list'''
     try:
         attributes = ['person_id', 'phone_number', 'phone_type']
         order = ['desc', 'asc']
@@ -166,6 +168,7 @@ def sort_data_phones(request_data):
     return 'Data is valid'
 
 def sort_data_emails(request_data):
+    '''Функция проверяет валидность параметров сортировки отправленных в обработчик get_emails_list'''
     try:
         attributes = ['person_id', 'email_address', 'email_type']
         order = ['desc', 'asc']

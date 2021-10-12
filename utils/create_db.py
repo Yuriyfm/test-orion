@@ -1,14 +1,13 @@
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+from orion import db_name, db_password, db_user
 
+# Модуль для создания новой базы данных для первого запуска
 
-def create_db():
-    """"Фукнция создает БД на основе данных db_user и db_password и db_name."""
+def create_db(db_name, db_password, db_user):
+    """Функция принимает на вход данные подключения к БД из config.ini и создает новую БД. """
     try:
         # Устанавливаем соединение с postgres
-        db_user = "postgres"
-        db_password = "qwerty"
-        db_name = 'oriondatabase'
         connection = psycopg2.connect(user=db_user, password=db_password)
         connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         # Создаем курсор для выполнения операций с базой данных
@@ -18,16 +17,19 @@ def create_db():
         # Закрываем соединение
         cursor.close()
         connection.close()
-        return ('База данных oriondb успешно создана')
+        return('База данных oriondb успешно создана')
     # ловим ошибку если БД с таким именем уже существует
     except psycopg2.errors.DuplicateDatabase:
-        return ('База данных с таким именем уже существует')
+        return('База данных с таким именем уже существует')
+    # ловим ошибку если указан неверный пользователь или пароль
     except psycopg2.OperationalError:
-        return ('Указан неверный db_user или db_password')
+        return('Указан неверный db_user или db_password')
+
+print(create_db(db_name, db_password, db_user))
 
 
 
-print(create_db())
+
 
 
 

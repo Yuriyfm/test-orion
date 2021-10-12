@@ -1,6 +1,8 @@
 from orion import db
 from sqlalchemy import text
 
+# В данном модуле находятся классы моделей таблиц и их методы обработки данных
+
 class Person(db.Model):
     __tablename__ = "persons"
     person_id = db.Column(db.Integer, primary_key=True)
@@ -18,7 +20,7 @@ class Person(db.Model):
                 'birthday': self.birthday, 'address': self.address}
 
 
-    def get_all_persons(sorted_by, order):
+    def get_all_persons(sorted_by=None, order=None):
         if sorted_by and order:
             return [Person.json(person) for person in Person.query.order_by(text(sorted_by + ' ' + order)).all()]
         return [Person.json(person) for person in Person.query.all()]
@@ -71,7 +73,7 @@ class Phone(db.Model):
     def json(self):
         return {'person_id': self.person_id, 'phone_type': self.phone_type, 'phone_number': self.phone_number}
 
-    def get_all_phones(sorted_by, order):
+    def get_all_phones(sorted_by=None, order=None):
         if sorted_by and order:
             return [Phone.json(phone) for phone in Phone.query.order_by(text(sorted_by + ' ' + order)).all()]
         return [Person.json(person) for person in Person.query.all()]
@@ -111,7 +113,7 @@ class Email(db.Model):
     def json(self):
         return {'person_id': self.person_id, 'email_type': self.email_type, 'email_address': self.email_address}
 
-    def get_all_emails(sorted_by, order):
+    def get_all_emails(sorted_by=None, order=None):
         if sorted_by and order:
             return [Email.json(email) for email in Email.query.order_by(text(sorted_by + ' ' + order)).all()]
         return [Email.json(email) for email in Email.query.all()]
@@ -140,4 +142,3 @@ class Email(db.Model):
     def __repr__(self):
         return f'<Email {self.email_address}>'
 
-db.create_all()

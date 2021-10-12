@@ -5,11 +5,15 @@ from random import choice, randint
 import json
 from pprint import pprint
 
+# модуль для генерации случайных данных с помощью библиотеки mimesis, а также для генерации JSON для тестирования работы API
+
 person = Generic('ru')
 genders = (Gender.MALE, Gender.FEMALE)
 
 def get_person(gender):
-    """Функция с помощью библиотеки mimesis генерирует случайные данные о пользователе и возвращает их в виде словаря"""
+    """Функция с помощью библиотеки mimesis генерирует случайные данные о пользователе и возвращает их в виде словаря.
+    Данные соответсвуют критериям валидации описанным в модуле data_validation"""
+
     full_name = ' '.join(person.person.full_name(gender).split()[::-1]) + ' ' \
                 + RussiaSpecProvider().patronymic(gender=gender)
     file_path = '/media/profile_images/' + person.file.file_name(FileType.IMAGE)
@@ -34,7 +38,7 @@ if __name__ == "__main__":
     def json_for_add_person():
         """Функция генерирует JSON с данными Person и related сущностями для обработчика add_person."""
         json_data =[]
-        for i in range(10):
+        for i in range(100):
             data = get_person(choice(genders))
             json_data.append(data)
         print((json.dumps(json_data, indent=2, sort_keys=True, default=str, ensure_ascii=False)))
@@ -61,14 +65,16 @@ if __name__ == "__main__":
             print((json.dumps(json_data, indent=2, sort_keys=True, default=str, ensure_ascii=False)))
 
     def json_for_sort_list():
+        """Функция генерирует JSON c данными для сортировки в методах получения всех данных таблицы"""
         attributes = ['person_id', 'address', 'birthday', 'email_address', 'email_type', 'file_path', 'full_name', 'gender',
                       'phone_number', 'phone_type']
         order = ['desc', 'asc']
         json_data = {'sorted_by': choice(attributes), 'order': choice(order)}
         print((json.dumps(json_data, indent=2, sort_keys=True, default=str, ensure_ascii=False)))
 
-    # json_for_add_person()
+
+    json_for_add_person()
     # json_for_update_person()
     # json_for_add_phone()
     # json_for_add_email()
-    json_for_sort_list()
+    # json_for_sort_list()
