@@ -1,0 +1,81 @@
+﻿/api/add_person
+
+[
+  {
+    "address": "Данков, Саянская, д. 359, кв. 163",
+    "birthday": "1954-11-27",
+    "emails": [
+      {
+        "email_address": "yealing2047@protonmail.com",
+        "email_type": "Личная"
+      }
+    ],
+    "file_path": "/media/profile_images/acting.jpg",
+    "full_name": "Алексеичев Лесбек Захарьевич",
+    "gender": "Мужской",
+    "phones": [
+      {
+        "phone_number": "+7(391)0738986",
+        "phone_type": "Городской"
+      }
+    ]
+  }
+]
+___________________________________________________________________________________________
+
+/api/update_person
+
+{
+  "address": "Реутов, Водопроводная, д. 493, кв. 412",
+  "birthday": "1995-09-22",
+  "file_path": "/media/profile_images/specialty.jpeg",
+  "full_name": "Саюшева Энигма Яковлевна",
+  "gender": "Женский",
+  "person_id": "1"
+}
+___________________________________________________________________________________________
+
+/api/get_person 
+/api/get_phone 
+/api/get_email 
+/api/delete_person
+/api/delete_phone 
+/api/delete_email
+
+{
+  "person_id": "1"
+}
+___________________________________________________________________________________________
+
+/api/get_persons_list
+/api/get_phones_list
+/api/get_emails_list
+
+{
+  "order": "asc",
+  "sorted_by": "(подставить нужное поле сущности)"
+}
+
+* пустой запрос вернет несортированный список
+____________________________________________________________________________________________
+
+/api/add_phone
+/api/update_phone
+
+{
+  "person_id": "1",
+  "phone_number": "+7(912)4613056",
+  "phone_type": "Мобильный"
+}
+____________________________________________________________________________________________
+
+/api/add_email 
+/api/update_email
+
+{
+  "email_address": "berkelium1958@live.com",
+  "email_type": "Рабочая",
+  "person_id": "1"
+}
+____________________________________________________________________________________________
+
