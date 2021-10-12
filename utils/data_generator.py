@@ -38,7 +38,7 @@ if __name__ == "__main__":
     def json_for_add_person():
         """Функция генерирует JSON с данными Person и related сущностями для обработчика add_person."""
         json_data =[]
-        for i in range(100):
+        for i in range(1):
             data = get_person(choice(genders))
             json_data.append(data)
         print((json.dumps(json_data, indent=2, sort_keys=True, default=str, ensure_ascii=False)))
@@ -73,8 +73,8 @@ if __name__ == "__main__":
         print((json.dumps(json_data, indent=2, sort_keys=True, default=str, ensure_ascii=False)))
 
 
-    json_for_add_person()
-    # json_for_update_person()
+    # json_for_add_person()
+    json_for_update_person()
     # json_for_add_phone()
     # json_for_add_email()
     # json_for_sort_list()
