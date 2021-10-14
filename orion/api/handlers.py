@@ -20,13 +20,14 @@ def page_not_found(e):
 def get_persons_list():
     '''Функция принимает POST-запрос с данными для сортировки и возвращает отсортированные
     записи из таблицы persons в формате JSON. Если данных для сортировки нет, возвращается несортированный список'''
+    func_name = 'get_persons_list'
     try:
         if not request.get_json():
             all_persons = Person.get_all_persons()
             return jsonify(all_persons)
         request_data = request.get_json()
         # Проводим валидацию полученных арибутов в модуле data_validation
-        validation = sort_data_persons(request_data)
+        validation = sort_data_persons(request_data, func_name)
         if validation != 'Data is valid':
             return validation
         # Передаем данные в метод get_all_persons модели Person
@@ -40,11 +41,12 @@ def get_persons_list():
 @app.route('/api/get_person', methods=['POST'])
 def get_person():
     '''Функция принимает POST-запрос c person_id  в формате JSON и возвращает запись из таблицы persons в формате JSON'''
+    func_name = 'get_person'
     try:
         # Из запроса получаем JSON c person_id
         request_data = request.get_json()
         # Проводим валидацию полученных арибутов в модуле data_validation с помощью regex
-        validation = id_validation(request_data)
+        validation = id_validation(request_data, get_person)
         if validation != 'Data is valid':
             return validation
         person_id = request_data['person_id']
@@ -110,13 +112,14 @@ def update_person():
             file_path=request_data['file_path'], full_name=request_data['full_name'],
             gender=request_data['gender'], birthday=request_data['birthday'],
             address=request_data['address'], person_id=request_data['person_id'])
+        return (f"Данные контакта {request_data['full_name']} обновлены")
     # ловим ошибку на несоответсвие входящих данных структуре JSON
     except BadRequest as bad:
         return ('структура данных не соответствует формату JSON')
     # ловим ошибку на отсутсвие person_id в БД
     except AttributeError as atr:
         return ('Контакт с указанным person_id не найден')
-    return (f"Данные контакта {request_data['full_name']} обновлены")
+
 
 
 @app.route('/api/delete_person', methods=['DELETE'])
