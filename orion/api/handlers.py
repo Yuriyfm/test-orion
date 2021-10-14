@@ -3,8 +3,8 @@ from sqlalchemy.orm.exc import UnmappedInstanceError
 from orion import app, db
 from flask import request, jsonify, Response
 from orion.models import Person, Phone, Email
-from orion.data_validation import add_person_data_validation, update_person_data_validation, add_phone_data_validation, \
-    add_email_data_validation, id_validation, sort_data_persons, sort_data_phones, sort_data_emails
+from orion.data_validation import add_person_data_validation, id_validation, sort_list_data_validation, \
+    add_data_validation, update_data_validation
 from werkzeug.exceptions import BadRequest
 
 # В данном модуле описаны методы обработки запросов к API по сущностям Person, Phone и Email.
@@ -27,7 +27,7 @@ def get_persons_list():
             return jsonify(all_persons)
         request_data = request.get_json()
         # Проводим валидацию полученных арибутов в модуле data_validation
-        validation = sort_data_persons(request_data, func_name)
+        validation = sort_list_data_validation(request_data, func_name)
         if validation != 'Data is valid':
             return validation
         # Передаем данные в метод get_all_persons модели Person
@@ -41,12 +41,11 @@ def get_persons_list():
 @app.route('/api/get_person', methods=['POST'])
 def get_person():
     '''Функция принимает POST-запрос c person_id  в формате JSON и возвращает запись из таблицы persons в формате JSON'''
-    func_name = 'get_person'
     try:
         # Из запроса получаем JSON c person_id
         request_data = request.get_json()
         # Проводим валидацию полученных арибутов в модуле data_validation с помощью regex
-        validation = id_validation(request_data, get_person)
+        validation = id_validation(request_data)
         if validation != 'Data is valid':
             return validation
         person_id = request_data['person_id']
@@ -100,11 +99,12 @@ def add_person():
 @app.route('/api/update_person', methods=['PATCH'])
 def update_person():
     '''Функция принимает данные из JSON в теле запроса и обновляет данные в таблице persons по указанному person_id '''
+    func_name = 'update_person'
     try:
         # Из запроса получаем JSON c данными Person
         request_data = request.get_json()
     # Проводим валидацию полученных арибутов в модуле data_validation с помощью regex
-        validation = update_person_data_validation(request_data)
+        validation = update_data_validation(request_data, func_name)
         if validation != 'Data is valid':
             return validation
     # Передаем атрибуты из request_data в метод update_person модели Person для изменения данных в БД
@@ -112,14 +112,13 @@ def update_person():
             file_path=request_data['file_path'], full_name=request_data['full_name'],
             gender=request_data['gender'], birthday=request_data['birthday'],
             address=request_data['address'], person_id=request_data['person_id'])
-        return (f"Данные контакта {request_data['full_name']} обновлены")
     # ловим ошибку на несоответсвие входящих данных структуре JSON
     except BadRequest as bad:
         return ('структура данных не соответствует формату JSON')
     # ловим ошибку на отсутсвие person_id в БД
     except AttributeError as atr:
         return ('Контакт с указанным person_id не найден')
-
+    return (f"Данные контакта {request_data['full_name']} обновлены")
 
 
 @app.route('/api/delete_person', methods=['DELETE'])
@@ -148,13 +147,14 @@ def remove_person():
 def get_phones_list():
     '''Функция принимает POST-запрос с данными для сортировки и возвращает отсортированные
     записи из таблицы phones в формате JSON. Если данных для сортировки нет, возвращается несортированный список'''
+    func_name = 'get_phones_list'
     try:
         if not request.get_json():
             all_phones = Phone.get_all_phones()
             return jsonify(all_phones)
         request_data = request.get_json()
         # Проводим валидацию полученных арибутов в модуле data_validation
-        validation = sort_data_phones(request_data)
+        validation = sort_list_data_validation(request_data, func_name)
         if validation != 'Data is valid':
             return validation
         # Передаем данные в метод get_all_phones модели Phones
@@ -190,11 +190,12 @@ def get_phone():
 @app.route('/api/add_phone', methods=['PUT'])
 def add_phone():
     '''Функция получает из запроса person_id, phone_number и phone_type в формате JSON и добавляет запись в таблицу phones.'''
+    func_name = 'add_phone'
     try:
         # Из запроса получаем JSON c данными
         request_data = request.get_json()
         # Проводим валидацию полученных арибутов в модуле data_validation с помощью regex
-        validation = add_phone_data_validation(request_data)
+        validation = add_data_validation(request_data, func_name)
         if validation != 'Data is valid':
             return validation
         # Передаем атрибуты и person_id в метод модели Phone add_phone
@@ -214,11 +215,12 @@ def add_phone():
 @app.route('/api/update_phone', methods=['PATCH'])
 def update_phone():
     '''Функция принимает данные из JSON в теле запроса и обновляет данные в таблице phones по указанному person_id '''
+    func_name = 'update_phone'
     # сохраняем данные из JSON в request_data
     try:
         request_data = request.get_json()
         # Проводим валидацию полученных арибутов в модуле data_validation с помощью regex
-        validation = add_phone_data_validation(request_data)
+        validation = update_data_validation(request_data, func_name)
         if validation != 'Data is valid':
             return validation
         # Передаем атрибуты и person_id в метод модели Phone update_phone
@@ -267,13 +269,14 @@ def remove_phone():
 def get_emails_list():
     '''Функция принимает POST-запрос с данными для сортировки и возвращает отсортированные
     записи из таблицы emails в формате JSON. Если данных для сортировки нет, возвращается несортированный список'''
+    func_name = 'get_emails_list'
     try:
         if not request.get_json():
             all_emails = Email.get_all_emails()
             return jsonify(all_emails)
         request_data = request.get_json()
         # Проводим валидацию полученных арибутов в модуле data_validation
-        validation = sort_data_emails(request_data)
+        validation = sort_list_data_validation(request_data, func_name)
         if validation != 'Data is valid':
             return validation
         # Передаем данные в метод get_all_emails модели Email
@@ -309,12 +312,13 @@ def get_email():
 @app.route('/api/add_email', methods=['PUT'])
 def add_email():
     '''Функция получает из запроса person_id, email_address и email_type в формате JSON и добавляет запись в таблицу emails.'''
+    func_name = 'add_email'
     try:
         # Из запроса получаем JSON c данными
         request_data = request.get_json()
         # ловим ошибку на несоответсвие входящих данных структуре JSON
         # Проводим валидацию полученных арибутов в модуле data_validation с помощью regex
-        validation = add_email_data_validation(request_data)
+        validation = add_data_validation(request_data, func_name)
         if validation != 'Data is valid':
             return validation
         new_email = Email.add_email(person_id=request_data["person_id"], email_address=request_data["email_address"],
@@ -334,11 +338,12 @@ def add_email():
 @app.route('/api/update_email', methods=['PATCH'])
 def update_email():
     '''Функция принимает данные из JSON в теле запроса и обновляет данные в таблице emails по указанному person_id '''
+    func_name = 'update_email'
     try:
         # сохраняем данные из JSON в request_data
         request_data = request.get_json()
         # Проводим валидацию полученных арибутов в модуле data_validation с помощью regex
-        validation = add_email_data_validation(request_data)
+        validation = update_data_validation(request_data, func_name)
         if validation != 'Data is valid':
             return validation
         # Передаем атрибуты и person_id в метод модели Email update_email

@@ -3,14 +3,14 @@ from mimesis.builtins import RussiaSpecProvider
 from mimesis.enums import Gender, FileType
 from random import choice, randint
 import json
-from pprint import pprint
 
 # модуль для генерации случайных данных с помощью библиотеки mimesis, а также для генерации JSON для тестирования работы API
 
 person = Generic('ru')
 genders = (Gender.MALE, Gender.FEMALE)
 
-def get_person(gender):
+
+def get_random_person(gender):
     """Функция с помощью библиотеки mimesis генерирует случайные данные о пользователе и возвращает их в виде словаря.
     Данные соответсвуют критериям валидации описанным в модуле data_validation"""
 
@@ -39,27 +39,27 @@ if __name__ == "__main__":
         """Функция генерирует JSON с данными Person и related сущностями для обработчика add_person."""
         json_data =[]
         for i in range(20):
-            data = get_person(choice(genders))
+            data = get_random_person(choice(genders))
             json_data.append(data)
         print((json.dumps(json_data, indent=2, sort_keys=True, default=str, ensure_ascii=False)))
 
     def json_for_update_person():
         """Функция генерирует JSON c данными Person для обработчика update_person. person_id - подставить существующий"""
-        data = get_person(choice(genders))
+        data = get_random_person(choice(genders))
         json_data = {'person_id': '1', 'full_name': data['full_name'], 'file_path': data['file_path'], 'gender': data['gender'],
                    'birthday': data['birthday'], 'address': data['address']}
         print((json.dumps(json_data, indent=2, sort_keys=True, default=str, ensure_ascii=False)))
 
     def json_for_update_phone():
         """Функция генерирует JSON c данными Phone для обработчика add_phone. person_id - подставить существующий"""
-        data = get_person(choice(genders))
+        data = get_random_person(choice(genders))
         for item in data['phones']:
             json_data = {'person_id': '1', 'phone_number': item['phone_number'], 'phone_type': item['phone_type']}
             print((json.dumps(json_data, indent=2, sort_keys=True, default=str, ensure_ascii=False)))
 
     def json_for_update_email():
         """Функция генерирует JSON c данными Phone для обработчика add_phone. person_id - подставить существующий"""
-        data = get_person(choice(genders))
+        data = get_random_person(choice(genders))
         for item in data['emails']:
             json_data = {'person_id': '1', 'email_address': item['email_address'], 'email_type': item['email_type']}
             print((json.dumps(json_data, indent=2, sort_keys=True, default=str, ensure_ascii=False)))
@@ -73,7 +73,7 @@ if __name__ == "__main__":
         print((json.dumps(json_data, indent=2, sort_keys=True, default=str, ensure_ascii=False)))
 
 
-    # json_for_add_person()
+    json_for_add_person()
     # json_for_update_person()
     # json_for_update_phone()
     # json_for_update_email()
