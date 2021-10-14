@@ -165,15 +165,21 @@ def sort_list_data_validation(request_data, func_name):
         if func_name == 'get_persons_list' and request_data['sorted_by'] not in attributes_for_sort_persons_list:
             return f'Неверный формат значения атрибута sorted_by. Ожидается один из следующих вариантов -' \
                    f' {attributes_for_sort_persons_list}, было получено -  {request_data["sorted_by"]}'
+        if func_name == 'get_persons_list' and request_data['"order'] not in order:
+            return f'Неверный формат значения атрибута order. Ожидается один из следующих вариантов -' \
+                   f' {order}, было получено -  {request_data["sorted_by"]}'
         elif func_name == 'get_phones_list' and request_data['sorted_by'] not in attributes_for_sort_phones_list:
             return f'Неверный формат значения атрибута sorted_by. Ожидается один из следующих вариантов -' \
                    f' {attributes_for_sort_phones_list}, было получено -  {request_data["sorted_by"]}'
+        if func_name == 'get_phones_list' and request_data['"order'] not in order:
+            return f'Неверный формат значения атрибута order. Ожидается один из следующих вариантов -' \
+                   f' {order}, было получено -  {request_data["sorted_by"]}'
         elif func_name == 'get_emails_list' and request_data['sorted_by'] not in attributes_for_sort_emails_list:
             return f'Неверный формат значения атрибута sorted_by. Ожидается один из следующих вариантов -' \
                    f' {attributes_for_sort_emails_list}, было получено -  {request_data["sorted_by"]}'
-        if request_data['order'] not in order:
-            return f'Неверный формат значения атрибута order. Ожидается один из следующих вариантов {order}' \
-                   f', было получено -  {request_data["order"]}'
+        if func_name == 'get_phones_list' and request_data['"order'] not in order:
+            return f'Неверный формат значения атрибута order. Ожидается один из следующих вариантов -' \
+                   f' {order}, было получено -  {request_data["sorted_by"]}'
     except TypeError:
         return ('Нет доступных данных для обработки или формат данных не соответсвует ожидаемому')
     except KeyError as k:
