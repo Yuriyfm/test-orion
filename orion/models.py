@@ -76,7 +76,7 @@ class Phone(db.Model):
     def get_all_phones(sorted_by=None, order=None):
         if sorted_by and order:
             return [Phone.json(phone) for phone in Phone.query.order_by(text(sorted_by + ' ' + order)).all()]
-        return [Phone.json(person) for person in Person.query.all()]
+        return [Phone.json(person) for person in Phone.query.all()]
 
     def get_phone(person_id):
         return Phone.query.filter_by(person_id=person_id).first()
