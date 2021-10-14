@@ -88,29 +88,29 @@ REST API сервер «Адресная книга».
 
     добавление данных (тип запроса PUT):
 
-      /api/add_person - тип запроса PUT, добавляет данные одного или нескольких контактов в таблицу persons и связанные таблицы
+      /api/add_person - добавляет данные одного или нескольких контактов в таблицу persons и связанные таблицы
 
-      /api/add_phone - тип запроса PUT, добавляет данные в таблицу phone. Принимает на вход person_id, phone_number (должен быть уникальным) и phone_type 
+      /api/add_phone - добавляет данные в таблицу phone. Принимает на вход person_id, phone_number (должен быть уникальным) и phone_type 
 
-      /api/add_email - тип запроса PUT, добавляет данные в таблицу email. Принимает на вход person_id, email_address (должен быть уникальным)  и email_type
+      /api/add_email - добавляет данные в таблицу email. Принимает на вход person_id, email_address (должен быть уникальным)  и email_type
 
 
     Изменение данных (тип запроса PATCH):
 
-      /api/update_person - тип запроса PATCH, изменяет запись в таблице persons. Принимает на вход person_id
+      /api/update_person - изменяет запись в таблице persons. Принимает на вход person_id
 
-      /api/update_phone - тип запроса PATCH, изменяет запись в таблице phones. Принимает на вход person_id, phone_number (должен быть уникальным) и phone_type
+      /api/update_phone -  изменяет запись в таблице phones. Принимает на вход person_id, phone_number (должен быть уникальным) и phone_type
 
-      /api/update_email - тип запроса PATCH, изменяет запись в таблице emails. Принимает на вход person_id, email_address (должен быть уникальным)  и email_type
+      /api/update_email -  изменяет запись в таблице emails. Принимает на вход person_id, email_address (должен быть уникальным)  и email_type
 
-      /api/delete_person - тип запроса DELETE, удаляет запись в таблице persons и в связанных таблицах. Принимает на вход person_id
+      
 
 
     Удаление данных (тип запроса DELETE): 
 
       /api/delete_phone - тип запроса DELETE, удаляет запись в таблице phones. Принимает на вход person_id
-
-      /api/get_email - тип запроса POST, возвращает конкретную запись таблицы emails. Принимает на вход person_id
+      
+      /api/delete_person - тип запроса DELETE, удаляет запись в таблице persons и в связанных таблицах. Принимает на вход person_id
 
       /api/delete_email - тип запроса DELETE, удаляет запись в таблице emails. Принимает на вход person_id
 
