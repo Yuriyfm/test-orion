@@ -1,6 +1,6 @@
 from orion.models import Person, Phone, Email
 from orion import db
-from utils.data_generator import get_person, genders
+from utils.data_generator import get_random_person, genders
 from random import choice
 import sys
 import os
@@ -12,7 +12,7 @@ def data_uploader():
     валидации описанным в модуле data_validation"""
     for i in range(100):
         try:
-            data = get_person(choice(genders))
+            data = get_random_person(choice(genders))
             new_person = Person(file_path=data['file_path'], full_name=data['full_name'], gender=data['gender'],
                             birthday=data['birthday'], address=data['address'])
             db.session.add(new_person)

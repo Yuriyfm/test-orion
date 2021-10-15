@@ -38,7 +38,7 @@ if __name__ == "__main__":
     def json_for_add_person():
         """Функция генерирует JSON с данными Person и related сущностями для обработчика add_person."""
         json_data =[]
-        for i in range(20):
+        for i in range(10):
             data = get_random_person(choice(genders))
             json_data.append(data)
         print((json.dumps(json_data, indent=2, sort_keys=True, default=str, ensure_ascii=False)))
