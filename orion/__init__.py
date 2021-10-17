@@ -26,6 +26,4 @@ db = SQLAlchemy(app)
 migrate = Migrate(app,  db)
 
 
-
-
 from orion.api import handlers
