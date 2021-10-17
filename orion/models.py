@@ -219,7 +219,7 @@ class Email(db.Model):
                    f'{person_id}. Для удаления выберите один из существующих адресов: {emails_by_id}'
         db.session.delete(email_to_delete[0])
         db.session.commit()
-        return f'Номер телефона {email_address} был удален'
+        return f'Адрес почты {email_address} был удален'
 
     def __repr__(self):
         return f'<Email {self.email_address}>'
