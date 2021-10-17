@@ -210,7 +210,7 @@ class Email(db.Model):
     def delete_email(person_id, email_address):
         """Метод принимает на вход person_id и email который нужно удалить  и удаляет соответствующую запись
         из таблицы emails"""
-        emails_by_id = Email.query.filter(Phone.person_id == person_id).all()
+        emails_by_id = Email.query.filter(Email.person_id == person_id).all()
         if not emails_by_id:
             return f'person_id = {person_id} не был найден в БД'
         email_to_delete = [email for email in emails_by_id if email.email_address == email_address]
