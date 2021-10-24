@@ -99,10 +99,10 @@ if __name__ == "__main__":
         print((json.dumps(json_data, indent=2, sort_keys=True, default=str, ensure_ascii=False)))
 
 
-    # json_for_add_person(3)
-    # json_for_update_person()
+    # json_for_add_person(2)
+    json_for_update_person()
     # json_for_update_phone()
     # json_for_update_email()
     # json_for_sort_list()
     # json_for_add_phone()
-    json_for_add_email()
+    # json_for_add_email()

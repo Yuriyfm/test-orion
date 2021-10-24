@@ -2,7 +2,7 @@ import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from orion import db_name, db_password, db_user
 
-# Модуль для создания новой базы данных для первого запуска
+# Модуль для создания новой базы перед первым запуском
 
 
 def create_db(name, password, user):
