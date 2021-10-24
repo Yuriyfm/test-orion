@@ -337,6 +337,7 @@ class Email(db.Model):
     def delete_email(person_id, email_address):
         """Метод принимает на вход person_id и email который нужно удалить  и удаляет соответствующую запись
         из таблицы emails"""
+<<<<<<< HEAD
         try:
             emails_by_id = Email.query.filter(Email.person_id == person_id).all()
             if not emails_by_id:
@@ -351,6 +352,18 @@ class Email(db.Model):
         except KeyError as ke:
             return {'error': f'В полученных данных отсутствует обязательный аргумент - {ke}',
                     'exception_name': ke.__class__.__name__, 'info': traceback.format_exc()}
+=======
+        emails_by_id = Email.query.filter(Email.person_id == person_id).all()
+        if not emails_by_id:
+            return f'person_id = {person_id} не был найден в БД'
+        email_to_delete = [email for email in emails_by_id if email.email_address == email_address]
+        if len(email_to_delete) == 0:
+            return f'email {email_address} не был найден среди адресов контакта с person_id = ' \
+                   f'{person_id}. Для удаления выберите один из существующих адресов: {emails_by_id}'
+        db.session.delete(email_to_delete[0])
+        db.session.commit()
+        return f'Адрес почты {email_address} был удален'
+>>>>>>> 2839ccdeb5d1d0e243dc3c2dc7c5d5e45b16ba09
 
     def __repr__(self):
         return f'<Email {self.email_address}>'
