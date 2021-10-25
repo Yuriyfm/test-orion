@@ -74,8 +74,8 @@ if __name__ == "__main__":
         - подставить существующие"""
         data = get_random_person(choice(genders))
         for item in data['phones']:
-            json_data = {'person_id': '1', 'new_phone_number': item['phone_number'],
-                         'old_phone_number': '+7(ххх)ххххххх', 'new_phone_type': item['phone_type']}
+            json_data = {'person_id': '1', 'phone_number': item['phone_number'],
+                         'old_phone_number': '+7(ххх)ххххххх', 'phone_type': item['phone_type']}
             print((json.dumps(json_data, indent=2, sort_keys=True, default=str, ensure_ascii=False)))
 
 
@@ -84,8 +84,8 @@ if __name__ == "__main__":
         - подставить существующие"""
         data = get_random_person(choice(genders))
         for item in data['emails']:
-            json_data = {'person_id': '1', 'new_email_address': item['email_address'],
-                         'new_email_type': item['email_type'], 'old_email_address': 'ivanov1980@mail.ru'}
+            json_data = {'person_id': '1', 'email_address': item['email_address'],
+                         'email_type': item['email_type'], 'old_email_address': 'ivanov1980@mail.ru'}
             print((json.dumps(json_data, indent=2, sort_keys=True, default=str, ensure_ascii=False)))
 
 
@@ -100,8 +100,8 @@ if __name__ == "__main__":
 
 
     # json_for_add_person(2)
-    json_for_update_person()
-    # json_for_update_phone()
+    # json_for_update_person()
+    json_for_update_phone()
     # json_for_update_email()
     # json_for_sort_list()
     # json_for_add_phone()
