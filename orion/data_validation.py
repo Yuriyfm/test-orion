@@ -51,6 +51,9 @@ validation_dict = {
     'phone_number': {'regexp': phone_number_validation_regexp,
                      'return_if_invalid': 'Неверный формат атрибута phone_number. Ожидается номер в одном из форматов -'
                                           ' +7хххххххххх/+7(ххх)ххххххх/8хххххххххх/8(ххх)ххххххх.'},
+    'old_phone_number': {'regexp': phone_number_validation_regexp,
+                     'return_if_invalid': 'Неверный формат атрибута phone_number. Ожидается номер в одном из форматов -'
+                                          ' +7хххххххххх/+7(ххх)ххххххх/8хххххххххх/8(ххх)ххххххх.'},
     'phone_type': {'regexp': phone_type_validation_regexp,
                    'return_if_invalid': f'Неверный формат атрибута phone_type. Ожидаются варианты - '
                                         f'{", ".join(phone_types)}.'},
@@ -58,6 +61,9 @@ validation_dict = {
                    'return_if_invalid': f'Неверный формат атрибута email_type. Ожидаются варианты - '
                                         f'{", ".join(email_types)}.'},
     'email_address': {'regexp': email_address_validation_regexp,
+                      'return_if_invalid': 'Неверный формат атрибута email_address. Ожидается адрес '
+                                           'почты в подобном формате - ivanov1980@yahoo.com.'},
+    'old_email_address': {'regexp': email_address_validation_regexp,
                       'return_if_invalid': 'Неверный формат атрибута email_address. Ожидается адрес '
                                            'почты в подобном формате - ivanov1980@yahoo.com.'},
     'person_id': {'regexp': person_id_validation_regexp,

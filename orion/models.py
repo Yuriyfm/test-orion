@@ -198,12 +198,9 @@ class Phone(db.Model):
         except exc.OperationalError as oe:
             return {'error': f'Не удалось подключиться к БД {db.engine.url.database}.',
                     'exception_name': oe.__class__.__name__, 'info': traceback.format_exc()}
-        except KeyError as ke:
-            return {'error': f'В полученных данных отсутствует обязательный аргумент - {ke}',
-                    'exception_name': ke.__class__.__name__, 'info': traceback.format_exc()}
 
     @staticmethod
-    def update_phone(person_id, new_phone_type, new_phone_number, old_phone_number):
+    def update_phone(person_id, phone_type, phone_number, old_phone_number):
         """Метод принимает person_id, существующий номер телефона и новый номер для замены и заменяет
         данные указанного номера"""
         try:
@@ -212,16 +209,13 @@ class Phone(db.Model):
             if len(phone_for_update) == 0:
                 return f'Номер телефона {old_phone_number} не был найден среди номеров контакта с person_id = ' \
                        f'{person_id}. Для замены выберите один из существующих номеров: {phones_by_id}'
-            phone_for_update[0].phone_type = new_phone_type
-            phone_for_update[0].phone_number = new_phone_number
+            phone_for_update[0].phone_type = phone_type
+            phone_for_update[0].phone_number = phone_number
             db.session.commit()
-            return {'response': f'Номер телефона {old_phone_number} был заменен на {new_phone_number}'}
+            return {'response': f'Номер телефона {old_phone_number} был заменен на {phone_number}'}
         except exc.OperationalError as oe:
             return {'error': f'Не удалось подключиться к БД {db.engine.url.database}.',
                     'exception_name': oe.__class__.__name__, 'info': traceback.format_exc()}
-        except KeyError as ke:
-            return {'error': f'В полученных данных отсутствует обязательный аргумент - {ke}',
-                    'exception_name': ke.__class__.__name__, 'info': traceback.format_exc()}
 
     @staticmethod
     def delete_phone(person_id, phone_number):
@@ -313,7 +307,7 @@ class Email(db.Model):
                     'exception_name': ke.__class__.__name__, 'info': traceback.format_exc()}
 
     @staticmethod
-    def update_email(person_id, old_email_address, new_email_address, new_email_type):
+    def update_email(person_id, old_email_address, email_address, email_type):
         """"Метод принимает person_id, существующий адрес почты и новый адрес для замены и заменяет
         данные указанной почты."""
         try:
@@ -322,10 +316,10 @@ class Email(db.Model):
             if len(email_for_update) == 0:
                 return f'адрес почты {old_email_address} не был найден среди адресов контакта с person_id = ' \
                        f'{person_id}. Для замены выберите один из существующих адресов почты: {emails_by_id}'
-            email_for_update[0].email_type = new_email_type
-            email_for_update[0].email_address = new_email_address
+            email_for_update[0].email_type = email_type
+            email_for_update[0].email_address = email_address
             db.session.commit()
-            return {'response': f'Адрес почты {old_email_address} был заменен на {new_email_address}'}
+            return {'response': f'Адрес почты {old_email_address} был заменен на {email_address}'}
         except exc.OperationalError as oe:
             return {'error': f'Не удалось подключиться к БД {db.engine.url.database}.',
                     'exception_name': oe.__class__.__name__, 'info': traceback.format_exc()}

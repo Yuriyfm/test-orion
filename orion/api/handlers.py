@@ -199,7 +199,9 @@ def add_phone():
     except exc.IntegrityError as ie:
         return jsonify({'error': f'Номер телефона {request_data["phone_number"]} уже есть в БД.',
                         'exception_name': ie.__class__.__name__, 'info': traceback.format_exc()})
-
+    except KeyError as ke:
+        return {'error': f'В полученных данных отсутствует обязательный аргумент - {ke}',
+                'exception_name': ke.__class__.__name__, 'info': traceback.format_exc()}
 
 @app.route('/api/update_phone', methods=['PATCH'])
 def update_phone():
@@ -214,8 +216,8 @@ def update_phone():
             return jsonify(validation)
         # Передаем атрибуты и person_id в метод модели Phone update_phone
         phones_update_result = Phone.update_phone(person_id=request_data["person_id"],
-                                                  new_phone_number=request_data["new_phone_number"],
-                                                  new_phone_type=request_data["new_phone_type"],
+                                                  phone_number=request_data["phone_number"],
+                                                  phone_type=request_data["phone_type"],
                                                   old_phone_number=request_data["old_phone_number"])
         return jsonify(phones_update_result)
     # ловим ошибку на несоответсвие входящих данных структуре JSON
@@ -226,7 +228,9 @@ def update_phone():
     except exc.IntegrityError as ie:
         return jsonify({'error': f'Номер телефона {request_data["phone_number"]} уже есть в БД.',
                         'exception_name': ie.__class__.__name__, 'info': traceback.format_exc()})
-
+    except KeyError as ke:
+        return {'error': f'В полученных данных отсутствует обязательный аргумент - {ke}',
+                'exception_name': ke.__class__.__name__, 'info': traceback.format_exc()}
 
 @app.route('/api/delete_phone', methods=['DELETE'])
 def delete_phone():
@@ -333,8 +337,8 @@ def update_email():
         # Передаем атрибуты и person_id в метод модели Email update_email
         emails_for_update = Email.update_email(person_id=request_data["person_id"],
                                                old_email_address=request_data["old_email_address"],
-                                               new_email_address=request_data["new_email_address"],
-                                               new_email_type=request_data["new_email_type"])
+                                               email_address=request_data["email_address"],
+                                               email_type=request_data["email_type"])
         return jsonify(emails_for_update)
     # ловим ошибку на несоответсвие входящих данных структуре JSON
     except BadRequest as be:

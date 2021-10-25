@@ -58,16 +58,16 @@ ________________________________________________________________________________
 {
     "person_id": "(подставить нужный person_id)",
     "old_phone_number": "(подставить phone_number который хотите заменить)",
-    "new_phone_number": "+7(999)5747111",
-    "new_phone_type": "Мобильный"
+    "phone_number": "+7(999)5747111",
+    "phone_type": "Мобильный"
 }
 ____________________________________________________________________________________________
 
 /api/update_email
 
 {
-  "new_email_address": "mulctary1991@protonmail.com",
-  "new_email_type": "Рабочая",
+  "email_address": "mulctary1991@protonmail.com",
+  "email_type": "Рабочая",
   "old_email_address": "(подставить email_address который хотите заменить)",
   "person_id": "(подставить нужный person_id)"
 }
