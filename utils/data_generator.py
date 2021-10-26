@@ -78,6 +78,12 @@ if __name__ == "__main__":
                          'old_phone_number': '+7(ххх)ххххххх', 'phone_type': item['phone_type']}
             print((json.dumps(json_data, indent=2, sort_keys=True, default=str, ensure_ascii=False)))
 
+    def json_for_delete_phone():
+        """Функция генерирует JSON c данными Phone для обработчика delete_phone. person_id - подставить существующий"""
+        data = get_random_person(choice(genders))
+        for item in data['phones']:
+            json_data = {'person_id': '1', 'phone_type': item['phone_type'], 'phone_number': item['phone_number']}
+            print((json.dumps(json_data, indent=2, sort_keys=True, default=str, ensure_ascii=False)))
 
     def json_for_update_email():
         """Функция генерирует JSON c данными Email для обработчика update_email. person_id и old_email_address
@@ -88,6 +94,12 @@ if __name__ == "__main__":
                          'email_type': item['email_type'], 'old_email_address': 'ivanov1980@mail.ru'}
             print((json.dumps(json_data, indent=2, sort_keys=True, default=str, ensure_ascii=False)))
 
+    def json_for_delete_email():
+        """Функция генерирует JSON c данными Email для обработчика delete_email. person_id - подставить существующий"""
+        data = get_random_person(choice(genders))
+        for item in data['emails']:
+            json_data = {'person_id': '1', 'email_type': item['email_type'], 'email_address': item['email_address']}
+            print((json.dumps(json_data, indent=2, sort_keys=True, default=str, ensure_ascii=False)))
 
     def json_for_sort_list():
         """Функция генерирует JSON c данными для сортировки в методах получения всех данных таблицы"""
@@ -100,9 +112,11 @@ if __name__ == "__main__":
 
 
     # json_for_add_person(2)
-    # json_for_update_person()
-    json_for_update_phone()
-    # json_for_update_email()
-    # json_for_sort_list()
     # json_for_add_phone()
     # json_for_add_email()
+    # json_for_update_person()
+    # json_for_update_phone()
+    # json_for_update_email()
+    json_for_delete_phone()
+    json_for_delete_email()
+    # json_for_sort_list()
